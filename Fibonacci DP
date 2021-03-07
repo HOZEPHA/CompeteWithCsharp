@@ -1,0 +1,88 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Please imput the number  : ");
+            Dictionary<long, long> dic = new Dictionary<long, long>();
+            var n = Convert.ToInt32(Console.ReadLine()); //input the number we want to calculate the fibonacci sqce
+            var watch = System.Diagnostics.Stopwatch.StartNew(); //starting a watch to calculate the running time
+
+            //Choose the calculation method brute force or using dynamic programming
+            //long result = fibSeqDP(n, dic);
+            long result = fibSeqLinear(n);
+            watch.Stop(); // stop the watch
+            var elapsedMs = watch.ElapsedMilliseconds; //storing the watch result in elapsedMs
+           
+            //output the time spent and result in console
+            Console.WriteLine("the fibonaci of " + n + " is " + result + "\n and the execution time is " + elapsedMs + "ms");
+            
+
+
+        }
+
+        //Fibonacci using Dynamic Programming and Memoization with Dictionary
+        //Time complexity O(n)
+        static long fibSeqDP(long n, Dictionary<long, long> dic)
+        {
+          
+            long result; 
+           if(dic.ContainsKey(n))
+            {
+                result = dic[n];
+                return result;
+            }
+
+           if(n ==1 || n==2)
+            {
+                return 1;
+            }
+
+           if(n == 0)
+            {
+                return 0;
+            }
+           else
+            {
+                result = fibSeqDP(n - 1, dic) + fibSeqDP(n - 2, dic);
+                dic.Add(n, result);
+                return result;
+
+            }
+        }
+
+
+        //Fibonacci using a Brute Force Approach
+        //Time complexity O(2^n)
+
+        static long fibSeqLinear(long n)
+        {
+
+            long result;
+            
+
+            if (n == 1 || n == 2)
+            {
+                return 1;
+            }
+
+            if (n == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                result = fibSeqLinear(n - 1) + fibSeqLinear(n - 2);
+                
+                return result;
+
+            }
+        }
+    }
+}
